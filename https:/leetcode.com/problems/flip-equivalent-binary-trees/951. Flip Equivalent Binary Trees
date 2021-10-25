@@ -1,0 +1,25 @@
+class Solution {
+public:
+    
+    bool helper(TreeNode* a,TreeNode* b)
+    {
+        if(!a && !b)
+            return true;
+        if(!a || !b)
+            return false;
+        
+        if(a->val!=b->val)
+            return false;
+        
+        return ((helper(a->left,b->right)&&helper(a->right,b->left)) || (helper(a->left,b->left)&&helper(a->right,b->right)));
+    }
+    
+    bool flipEquiv(TreeNode* root1, TreeNode* root2) {
+        if(!root1 && !root2)
+            return true;
+        if(!root1 || !root2)
+            return false;
+        
+        return helper(root1,root2);
+    }
+};
