@@ -1,0 +1,69 @@
+class Solution {
+public:
+    
+    /* If not equal, then find the maximum of t[i-1][j] and t[i][j-1] (this is how you had calculated LCS length first) , start moving in the max direction after inserting the character to the result string. Moving in max direction means discarding that character of the string that has not contributed in LCS. But still inserting in the final string because it will contribute in SuperSequence.*/
+    
+    string shortestCommonSupersequence(string str1, string str2) {
+        
+        int n=str1.length(),m=str2.length();
+        
+        int dp[n+1][m+1];
+        
+        for(int i=0;i<=n;i++)
+        {
+            for(int j=0;j<=m;j++)
+            {
+                if(i==0 || j==0)
+                    dp[i][j]=0;
+                else
+                if(str1[i-1]==str2[j-1])
+                {
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else
+                    dp[i][j]=max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        
+        string s="";
+        
+        int i=n,j=m;
+        
+        while(i>0 && j>0)
+        {
+            if(str1[i-1]==str2[j-1])
+            {
+                s+=str1[i-1];
+                i--;
+                j--;
+            }
+            else
+            if(dp[i-1][j]>dp[i][j-1])
+            {
+                s+=str1[i-1];
+                i--;
+            }
+            else
+            {
+                s+=str2[j-1];
+                j--;
+            }
+        }
+        
+        while(i>0)
+        {
+            s+=str1[i-1];
+            i--;
+        }
+        
+        while(j>0)
+        {
+            s+=str2[j-1];
+            j--;
+        }
+        
+        reverse(s.begin(),s.end());
+        
+        return s;
+    }
+};
