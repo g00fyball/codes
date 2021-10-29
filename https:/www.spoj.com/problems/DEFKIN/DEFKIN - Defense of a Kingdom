@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    
+    long long t;
+    cin>>t;
+    
+    for(long long i=0;i<t;i++)
+    {
+        long long w,h,n;
+        cin>>w>>h>>n;
+        
+        vector<long long> w1(w,0),h1(h,0);
+        for(long long j=0;j<n;j++)
+        {
+            long long w2,h2;
+            cin>>w2>>h2;
+            
+            w1[w2-1]=1,h1[h2-1]=1;
+        }
+        
+        long long c1=0,ans1=0,c2=0,ans2=0;
+        
+        for(long long i=0;i<w;i++)
+        {
+            if(w1[i]==0)
+                c1++;
+            else
+                c1=0;
+            ans1=max(ans1,c1);
+        }
+        
+        for(long long i=0;i<h;i++)
+        {
+            if(h1[i]==0)
+                c2++;
+            else
+                c2=0;
+            ans2=max(ans2,c2);
+        }
+        
+        cout<<ans1*ans2<<endl;
+    }
+    
+    return 0;
+}
