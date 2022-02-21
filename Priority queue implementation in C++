@@ -1,0 +1,78 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class item
+{
+    public:
+    int value;
+    int priority;
+};
+
+item st[1000000];
+
+int s=-1;
+
+void enqueue(int it,int h)
+{
+    ++s;
+    
+    st[s].value=it;
+    st[s].priority=h;
+}
+
+int peek()
+{
+    int highestp=INT_MIN;
+    
+    int in=-1;
+    
+    for(int i=0;i<=s;i++)
+    {
+        if(highestp==st[i].priority && st[in].value<st[i].value)
+        {
+            in=i;
+        }
+        else
+        if(highestp<st[i].priority)
+        {
+            highestp=st[i].priority;
+            in=i;
+        }
+    }
+    
+    return in;
+}
+
+void dequeue()
+{
+    int in=peek();
+    
+    for(int i=in;i<=s;i++)
+    {
+        st[i]=st[i+1];
+    }
+    
+    s--;
+}
+
+int main()
+{
+    enqueue(10, 2);
+    enqueue(14, 4);
+    enqueue(16, 4);
+    enqueue(12, 3);
+    
+    int id=peek();
+    
+    cout<<st[id].value<<endl;
+    
+    dequeue();
+    
+    id=peek();
+    
+    cout<<st[id].value<<endl;
+    
+    return 0;
+    
+    
+}
