@@ -1,0 +1,132 @@
+//hash function
+//
+
+#include<bits/stdc++.h>
+using namespace std;
+
+class hashmap
+{
+    private:
+        static const int hashgroup=10;
+        vector<pair<int,string>> hash[hashgroup];
+    
+    public:
+        void insert(int key,string val);
+        string fetch(int key);
+        int hashfunction(int key);
+        bool isEmpty();
+        void removekey(int key);
+        void print();
+};
+
+void hashmap::print()
+{
+    for(int i=0;i<hashgroup;i++)
+    {
+        cout<<"Group "<<i+1<<endl;
+        for(auto it=hash[i].begin();it!=hash[i].end();it++)
+        {
+            cout<<it->first<<" "<<it->second<<endl;
+        }
+        cout<<endl;
+    }
+}
+
+void hashmap:: removekey(int key)
+{
+    int t=hashfunction(key);
+    
+    for(auto it=hash[t].begin();it!=hash[t].end();++it)
+    {
+        if(it->first==key)
+        {
+            hash[t].erase(it);
+            cout<<"Key existed and now removed";
+            return;
+        }
+    }
+    
+    cout<<"Key doesnot existed";
+    return;
+}
+
+void hashmap::insert(int key,string val)
+{
+    int t=hashfunction(key);
+    
+    for(auto it=hash[t].begin();it!=hash[t].end();++it)
+    {
+        if(it->first==key)
+        {
+            it->second=val;
+            cout<<"It did exist before and now we have replaced it";
+            return;
+        }
+    }
+    
+    hash[t].push_back(make_pair(key,val));
+}
+
+string hashmap:: fetch(int key)
+{
+    int t=hashfunction(key);
+    
+    for(auto it=hash[t].begin();it!=hash[t].end();++it)
+    {
+        if(it->first==key)
+        {
+            return it->second;
+        }
+    }
+    
+    cout<<"It doesnot have it";
+    return "";
+}
+
+bool hashmap::isEmpty()
+{
+    for(int i=0;i<hashgroup;i++)
+    {
+        if(hash[i].size()>0)
+            return false;
+    }
+    
+    return true;
+}
+
+int hashmap:: hashfunction(int key)
+{
+    return (key%hashgroup);
+}
+
+
+int main()
+{
+    hashmap h;
+    
+    if(h.isEmpty())
+    {
+        cout<<"Correct answer. We did it Correct answer"<<endl;
+    }
+    else
+    {
+        cout<<"Oh damn it did not do well"<<endl;
+    }
+    
+    h.insert(905,"Jim");
+    h.insert(201,"Tom");
+    h.insert(332,"Jim");
+    h.insert(124,"Sally");
+    h.insert(107,"Sandy");
+    h.insert(929,"Barb");
+    h.insert(928,"Rob");
+    h.insert(928,"Rick");
+    
+    h.print();
+    
+    h.removekey(332);
+    h.removekey(901);
+    
+    return 0;
+    
+}
